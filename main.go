@@ -2,19 +2,26 @@ package main
 
 import (
 	"businesscardapi/repository"
-	"fmt"
-	"log"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	testUserName := "test_user_2"
-	userTable := repository.GetTestUsersTable()
-	search_user, err := userTable.GetUser(testUserName)
+	router := gin.Default()
+	router.GET(":username", getUserDetails)
+	router.Run("localhost:8080")
+}
 
+func getUserDetails(c *gin.Context) {
+	username := c.Param("username")
+	userTable := repository.GetTestUsersTable()
+	search_user, err := userTable.GetUser(username)
 	if err != nil || search_user.Username == "" {
-		log.Printf("failed to get user, %v, here's why %v", testUserName, err)
+		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "User not found"})
+		return
 	} else {
-		fmt.Println("User:")
-		fmt.Println(search_user)
+		c.IndentedJSON(http.StatusOK, search_user)
+		return
 	}
 }
