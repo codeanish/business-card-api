@@ -1,4 +1,4 @@
-module business-card-api
+module businesscardapi
 
 go 1.21.0
 
