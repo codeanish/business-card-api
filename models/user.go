@@ -9,8 +9,11 @@ import (
 // of the movie in Amazon DynamoDB. Title is the sort key, Year is the partition key,
 // and Info is additional data.
 type User struct {
-	Username  string `dynamodbav:"user_name,string"`
-	GithubUrl string `dynamodbav:"github_url,string"`
+	Username    string `dynamodbav:"user_name,string"`
+	GithubUrl   string `dynamodbav:"github_url,string"`
+	Email       string `dynamodbav:"email,string"`
+	Name        string `dynamodbav:"name,string"`
+	LeetcodeUrl string `dynamodbav:"leetcode_url,string"`
 }
 
 func (user User) GetKey() map[string]types.AttributeValue {
