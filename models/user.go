@@ -15,6 +15,8 @@ type User struct {
 	Name                 string   `dynamodbav:"name,string"`
 	LeetcodeUrl          string   `dynamodbav:"leetcode_url,string"`
 	ProgrammingLanguages []string `dynamodbav:"programming_languages,stringset"`
+	DataStorage          []string `dynamodbav:"data_storage,stringset"`
+	Infrastructure       []string `dynamodbav:"infrastructure,stringset"`
 }
 
 func (user User) GetKey() map[string]types.AttributeValue {
