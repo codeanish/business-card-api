@@ -8,6 +8,7 @@ func main() {
 	router := gin.Default()
 	router.Use(corsMiddleware())
 	router.GET(":username", getUserDetails)
+	router.GET(":username/leetcode", getLeetcodeRanking)
 	router.Run()
 }
 
