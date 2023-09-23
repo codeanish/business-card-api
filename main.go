@@ -9,6 +9,7 @@ func main() {
 	router.Use(corsMiddleware())
 	router.GET(":username", getUserDetails)
 	router.GET(":username/leetcode", getLeetcodeRanking)
+	router.GET(":username/github", getGithubTotalCommits)
 	router.Run()
 }
 

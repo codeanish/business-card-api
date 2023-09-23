@@ -56,3 +56,33 @@ func getLeetcodeRanking(c *gin.Context) {
 	json.Unmarshal([]byte(string(body)), &leetcodeStats)
 	c.IndentedJSON(http.StatusOK, gin.H{"ranking": leetcodeStats.Data.MatchedUser.Profile.Ranking})
 }
+
+func getGithubTotalCommits(c *gin.Context) {
+
+	method := "GET"
+	username := c.Param("username")
+	url := fmt.Sprintf("https://api.github.com/search/commits?q=author:%s", username)
+	client := &http.Client{}
+	req, err := http.NewRequest(method, url, nil)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	req.Header.Add("Accept", "application/vnd.github.cloak-preview")
+	req.Header.Add("X-GitHub-Api-Version", "2022-11-28")
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer res.Body.Close()
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": "Internal server error"})
+		return
+	}
+	var commitSearchResponse models.CommitSearchResponse
+	json.Unmarshal([]byte(string(body)), &commitSearchResponse)
+	c.IndentedJSON(http.StatusOK, gin.H{"total_commits": commitSearchResponse.TotalCount})
+}
