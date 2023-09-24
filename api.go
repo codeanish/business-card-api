@@ -86,3 +86,30 @@ func getGithubTotalCommits(c *gin.Context) {
 	json.Unmarshal([]byte(string(body)), &commitSearchResponse)
 	c.IndentedJSON(http.StatusOK, gin.H{"total_commits": commitSearchResponse.TotalCount})
 }
+
+func getStackOverflowReputation(c *gin.Context) {
+	method := "GET"
+	userId := c.Param("userId")
+	url := fmt.Sprintf("https://api.stackexchange.com/users/%s?site=stackoverflow", userId)
+	client := &http.Client{}
+	req, err := http.NewRequest(method, url, nil)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer res.Body.Close()
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": "Internal server error"})
+		return
+	}
+	var stackOverflowResponse models.StackOverflowResponse
+	json.Unmarshal([]byte(string(body)), &stackOverflowResponse)
+	c.IndentedJSON(http.StatusOK, gin.H{"reputation": stackOverflowResponse.Items[0].Reputation})
+}

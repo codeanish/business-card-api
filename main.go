@@ -10,6 +10,7 @@ func main() {
 	router.GET(":username", getUserDetails)
 	router.GET(":username/leetcode", getLeetcodeRanking)
 	router.GET(":username/github", getGithubTotalCommits)
+	router.GET(":username/stackoverflow/:userId", getStackOverflowReputation)
 	router.Run()
 }
 
