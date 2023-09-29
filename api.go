@@ -12,6 +12,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func healthCheck(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "API is up and running"})
+}
+
 func getUserDetails(c *gin.Context) {
 	username := c.Param("username")
 	userTable := repository.GetTestUsersTable()

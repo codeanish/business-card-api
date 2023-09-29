@@ -7,10 +7,11 @@ import (
 func main() {
 	router := gin.Default()
 	router.Use(corsMiddleware())
-	router.GET(":username", getUserDetails)
-	router.GET(":username/leetcode", getLeetcodeRanking)
-	router.GET(":username/github", getGithubTotalCommits)
-	router.GET(":username/stackoverflow/:userId", getStackOverflowReputation)
+	router.GET("/", healthCheck)
+	router.GET("/users/:username", getUserDetails)
+	router.GET("/users/:username/leetcode", getLeetcodeRanking)
+	router.GET("/users/:username/github", getGithubTotalCommits)
+	router.GET("/users/:username/stackoverflow/:userId", getStackOverflowReputation)
 	router.Run()
 }
 

@@ -14,6 +14,7 @@ type User struct {
 	Email                string   `dynamodbav:"email,string"`
 	Name                 string   `dynamodbav:"name,string"`
 	LeetcodeUrl          string   `dynamodbav:"leetcode_url,string"`
+	StackOverflowUrl     string   `dynamodbav:"stack_overflow_url,string"`
 	ProgrammingLanguages []string `dynamodbav:"programming_languages,stringset"`
 	DataStorage          []string `dynamodbav:"data_storage,stringset"`
 	Infrastructure       []string `dynamodbav:"infrastructure,stringset"`
